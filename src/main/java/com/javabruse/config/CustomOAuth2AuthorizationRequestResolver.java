@@ -36,13 +36,12 @@ public class CustomOAuth2AuthorizationRequestResolver implements OAuth2Authoriza
         if (authorizationRequest == null) {
             return null;
         }
-
         Map<String, Object> additionalParameters = new HashMap<>(authorizationRequest.getAdditionalParameters());
-        // Принудительно показывать выбор аккаунта ВСЕГДА
         additionalParameters.put("prompt", "select_account");
-
+        String fixedRedirectUri = "http://oauth-app.com:8080/login/oauth2/code/google";
         return OAuth2AuthorizationRequest.from(authorizationRequest)
                 .additionalParameters(additionalParameters)
+                .redirectUri(fixedRedirectUri)
                 .build();
     }
 }
